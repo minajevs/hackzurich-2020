@@ -62,10 +62,7 @@ const initDiagram = (nodeDataArray, linkDataArray) => () => {
         selectable: false,
         pickable: false,
       },
-      $(
-        go.Picture,
-        { source: `hata.png` }
-      )
+      $(go.Picture, { source: `hata.png` })
     )
   );
 
