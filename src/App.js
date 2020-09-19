@@ -9,10 +9,9 @@ export default function App() {
   const nodeToHighlight = params.get("node");
   const editable = params.get("editable") || true;
 
-
   return (
     <div>
-      <Diagram nodeToHighlight={nodeToHighlight}/>
+      <Diagram nodeToHighlight={nodeToHighlight} />
     </div>
   );
 }

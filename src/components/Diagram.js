@@ -62,10 +62,7 @@ const initDiagram = (nodeDataArray, linkDataArray) => () => {
         selectable: false,
         pickable: false,
       },
-      $(
-        go.Picture,
-        {source: `hata.png`}
-      )
+      $(go.Picture, { source: `hata.png` })
     )
   );
 
@@ -102,7 +99,6 @@ export default function Diagram(props) {
       initDiagram={initDiagram(nodeDataArray, linkDataArray)}
       divClassName="diagram-component"
       onModelChange={console.log}
-      
     />
   );
 }
