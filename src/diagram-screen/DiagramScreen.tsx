@@ -19,12 +19,6 @@ export default function App() {
   const [modalOpen, setModalOpen] = useState(false)
   const classes = useStyles()
 
-
-  const search = window.location.search;
-  const params = new URLSearchParams(search);
-  const nodeToHighlight = params.get("node");
-  const editable = params.get("editable") || true;
-
   return (
     <>
       <Grid container>
@@ -33,7 +27,7 @@ export default function App() {
           <Menu reset={() => setConfirmReset(true)} start={() => setModalOpen(true)} />
         </Grid.Column>
         <Grid.Column>
-          <Diagram nodeToHighlight={nodeToHighlight} />
+          <Diagram />
         </Grid.Column>
 
       </Grid>
@@ -41,6 +35,7 @@ export default function App() {
         open={modalOpen}
         onOpen={() => setModalOpen(true)}
         onClose={() => setModalOpen(false)}
+        onFinish={() => setModalOpen(false)}
       />
       <Confirm
         open={confirmReset}

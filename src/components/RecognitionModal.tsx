@@ -1,11 +1,12 @@
 import { makeStyles } from '@material-ui/core';
-import React, { useCallback, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import { useDropzone } from 'react-dropzone'
 import { Button, Header, Icon, Modal, Progress, Transition, TransitionablePortal } from 'semantic-ui-react'
 
 export type Props = {
   open: boolean,
   onClose: () => void,
+  onFinish: () => void,
   onOpen: () => void,
 }
 
@@ -19,6 +20,9 @@ const useStyles = makeStyles({
       outline: 'none'
     }
   },
+  processing: {
+    textAlign: 'center'
+  }
 });
 
 type States = 'upload' | 'loading' | 'processing'
@@ -31,8 +35,19 @@ export const RecognitionModal: React.FC<Props> = ({ open, onClose, onOpen }) => 
   const [loadingVisible, setLoadingVisible] = useState(false)
   const [processingVisible, setProcessingVisible] = useState(false)
 
+  useEffect(
+    () => {
+      const listener = () => onClose()
+      document.addEventListener('keydown', listener);
+      return () => {
+        document.removeEventListener('keydown', listener);
+      };
+    }, []
+  );
+
   const onDrop = useCallback(acceptedFiles => {
     setUploadVisible(false)
+
     setTimeout(() => {
       setLoadingVisible(true)
       const int = setInterval(() => setProgress(prev => (prev + Math.random() * 20)), 100)
@@ -93,7 +108,9 @@ export const RecognitionModal: React.FC<Props> = ({ open, onClose, onOpen }) => 
               <Progress percent={progress} indicating />
             </Transition>
             <Transition visible={processingVisible} animation='scale'>
-              <p>ti pidor</p>
+              <div className={classes.processing}>
+                <Header as="h4">Processing</Header>
+              </div>
             </Transition>
           </Modal.Content>
           <Modal.Actions>
