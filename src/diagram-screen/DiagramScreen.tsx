@@ -1,11 +1,12 @@
 import { makeStyles } from "@material-ui/core";
 // App.js
-import React, { useState } from "react";
+import React, { useCallback, useState } from "react";
 import { Confirm, Container, Grid } from "semantic-ui-react";
 
 import Diagram from "../components/Diagram";
 import { Menu } from "../components/Menu";
 import RecognitionModal from "../components/RecognitionModal";
+import { useNeuralData } from "../useNeuralData";
 
 const useStyles = makeStyles({
   container: {
@@ -17,7 +18,15 @@ const useStyles = makeStyles({
 export default function App() {
   const [confirmReset, setConfirmReset] = useState(false)
   const [modalOpen, setModalOpen] = useState(false)
+  const [processed, setProcessed] = useState(false)
   const classes = useStyles()
+
+  const finishProcessing = useCallback(() => {
+    setProcessed(true)
+    setModalOpen(false)
+  }, [])
+
+  const { nodeDataArray, linkDataArray } = useNeuralData(processed)
 
   return (
     <>
@@ -27,7 +36,7 @@ export default function App() {
           <Menu reset={() => setConfirmReset(true)} start={() => setModalOpen(true)} />
         </Grid.Column>
         <Grid.Column>
-          <Diagram />
+          <Diagram nodeDataArray={nodeDataArray} linkDataArray={linkDataArray} />
         </Grid.Column>
 
       </Grid>
@@ -35,7 +44,7 @@ export default function App() {
         open={modalOpen}
         onOpen={() => setModalOpen(true)}
         onClose={() => setModalOpen(false)}
-        onFinish={() => setModalOpen(false)}
+        onFinish={finishProcessing}
       />
       <Confirm
         open={confirmReset}

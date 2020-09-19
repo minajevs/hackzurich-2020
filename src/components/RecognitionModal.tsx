@@ -27,7 +27,7 @@ const useStyles = makeStyles({
 
 type States = 'upload' | 'loading' | 'processing'
 
-export const RecognitionModal: React.FC<Props> = ({ open, onClose, onOpen }) => {
+export const RecognitionModal: React.FC<Props> = ({ open, onClose, onOpen, onFinish }) => {
   const classes = useStyles()
 
   const [progress, setProgress] = useState(0)
@@ -37,10 +37,9 @@ export const RecognitionModal: React.FC<Props> = ({ open, onClose, onOpen }) => 
 
   useEffect(
     () => {
-      const listener = () => onClose()
-      document.addEventListener('keydown', listener);
+      document.addEventListener('keydown', onFinish);
       return () => {
-        document.removeEventListener('keydown', listener);
+        document.removeEventListener('keydown', onFinish);
       };
     }, []
   );
