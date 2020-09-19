@@ -1,0 +1,7 @@
+/* App.css */
+.diagram-component {
+  width: 880px;
+  height: 864px;
+  border: solid 1px black;
+  background-color: white;
+}
