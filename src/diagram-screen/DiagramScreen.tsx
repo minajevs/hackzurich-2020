@@ -1,7 +1,7 @@
 // App.js
 import React from "react";
 
-import Diagram from "./components/Diagram";
+import Diagram from "../components/Diagram";
 // render function...
 export default function App() {
   const search = window.location.search;
@@ -9,10 +9,9 @@ export default function App() {
   const nodeToHighlight = params.get("node");
   const editable = params.get("editable") || true;
 
-
   return (
     <div>
-      <Diagram nodeToHighlight={nodeToHighlight}/>
+      <Diagram nodeToHighlight={nodeToHighlight} />
     </div>
   );
 }
